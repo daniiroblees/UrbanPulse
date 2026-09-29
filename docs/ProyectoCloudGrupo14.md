@@ -60,12 +60,12 @@ Utilizaremos como framework Expo con React Native
 - Mayor consumo de memoria y tiempo de arranque que alternativas ligeras.  
 - Requiere conocimientos de Java y del ecosistema Spring.
 
-### ADR-003: Usar como framework React Native como principal tecnología frontend con Expo 
+### ADR-003: Usar como framework React Native con Expo como principal tecnología para el frontend movil para usuarios
 
 - *Estado:*  
   Accepted  
 - *Contexto:*  
-  La aplicación debe estar disponible en dispositivos móviles y permitir la consulta y creación de incidencias desde la calle. Se busca reducir el esfuerzo de desarrollo manteniendo una experiencia nativa en Android e iOS.  
+  La aplicación debe estar disponible en dispositivos móviles para los usuarios y permitir la consulta y creación de incidencias desde la calle. Se busca reducir el esfuerzo de desarrollo manteniendo una experiencia nativa en Android e iOS.  
 - *Opciones consideradas:*
 
 	1\. React Native con Expo  
@@ -259,3 +259,23 @@ Utilizaremos como framework Expo con React Native
 + Facilita iniciar PostgreSQL con PostGIS y otros servicios auxiliares mediante un único comando.  
 - Requiere que cada desarrollador tenga Docker instalado y recursos suficientes.  
 - Los cambios en la configuración de contenedores deben mantenerse sincronizados con la documentación del proyecto.
+
+### ADR-013 Usar React para la página web para los administradores
+
+- *Estado:*
+  Accepted
+- *Contexto:*
+  Los administradores necesitan una interfaz web para consultar, filtrar y gestionar incidencias y usuarios sin depender de la aplicación móvil. El panel debe consumir la API de Spring Boot y permitir desarrollar la interfaz de forma independiente.
+- *Opciones consideradas:*
+
+	1\. React con Vite
+	2\. Next.js
+	3\. Plantillas renderizadas por Spring Boot
+
+- *Decisión:*
+  Utilizar React con Vite para desarrollar la página web de administración.
+- *Consecuencias:*
++ Vite proporciona un entorno de desarrollo rápido y una configuración inicial sencilla.
++ React facilita construir una interfaz de administración reutilizable y desacoplada de la API.
+- Se debe mantener y desplegar un frontend adicional respecto a la aplicación móvil.
+- No incluye renderizado en servidor por defecto, aunque no es necesario para un panel interno.
