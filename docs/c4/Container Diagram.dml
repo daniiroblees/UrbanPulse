@@ -1,0 +1,41 @@
+workspace "UrbanPulse" "Arquitectura del sistema UrbanPulse" {
+
+    model {
+        urbanPulse = softwareSystem "UrbanPulse" "Plataforma cloud para la gestión de incidencias urbanas" {
+            webFrontend = container "Frontend Web" "React" "Interfaz de usuario web"
+            appFrontend = container "Frontend App" "React Native / Flutter" "Aplicación móvil"
+            backendApi  = container "Backend API" "Spring Boot" "Lógica de negocio y servicios"
+            database    = container "PostgreSQL" "PostgreSQL" "Almacenamiento de datos relacionales" "Database"
+            
+            # Relaciones entre contenedores
+            webFrontend -> backendApi "HTTPS / JSON"
+            appFrontend -> backendApi "HTTPS / JSON"
+            backendApi  -> database   "JDBC"
+        }
+    }
+
+    views {
+        container urbanPulse "Containers" {
+            include *
+            autoLayout tb
+        }
+
+        styles {
+            element "Container" {
+                background #90cafe
+                color #0b2f56
+                shape RoundedBox
+            }
+            element "Database" {
+                background #c8e6c9
+                color #1b5e20
+                shape Cylinder
+            }
+            # Estilo para hacer las flechas continuas y oscuras
+            relationship "Relationship" {
+                dashed false
+                color #272727
+            }
+        }
+    }
+}

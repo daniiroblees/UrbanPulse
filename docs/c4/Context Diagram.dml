@@ -1,0 +1,72 @@
+workspace "Sistema de Gestión de Incidencias" "Diagrama de Contexto de Sistema" {
+
+    model {
+        // --- ACTORES (Personas) ---
+        ciudadano = person "Ciudadano" "Registra incidencias, aporta ubicación y evidencias, y consulta el estado."
+        operador = person "Operador municipal" "Valida, rechaza, clasifica, prioriza y asigna incidencias."
+        tecnico = person "Técnico" "Acepta trabajos, actualiza el progreso y documenta la resolución."
+        admin = person "Administrador" "Gestiona usuarios, roles, categorías, departamentos y fuentes."
+        analista = person "Analista" "Explora indicadores, patrones espaciales y resultados de modelos."
+
+        // --- SISTEMA PRINCIPAL ---
+        sistema = softwareSystem "Sistema" "Permite la gestión, seguimiento y análisis integral de incidencias urbanas."
+
+        // --- SISTEMAS EXTERNOS (APIs) ---
+        apiDatosAbiertos = softwareSystem "datosabiertos.malaga.eu" "Proporciona datos urbanos abiertos del municipio de Málaga." "External"
+        apiOSM = softwareSystem "OpenStreetMap" "Proporciona servicios de cartografía y geolocalización espacial." "External"
+        apiWeather = softwareSystem "OpenWeatherMap" "Proporciona datos meteorológicos y condiciones climáticas." "External"
+
+        // --- RELACIONES DE LOS USUARIOS CON EL SISTEMA ---
+        ciudadano -> sistema "Registra incidencias y consulta su estado"
+        operador -> sistema "Gestiona, valida y asigna incidencias"
+        tecnico -> sistema "Consulta tareas asignadas y actualiza su progreso"
+        admin -> sistema "Administra"
+        analista -> sistema "Analiza métricas, patrones espaciales e indicadores"
+
+        // --- RELACIONES DEL SISTEMA CON LAS APIS EXTERNAS ---
+        sistema -> apiDatosAbiertos "Consulta datos urbanos abiertos"
+        sistema -> apiOSM "Consulta mapas y geolocalización"
+        sistema -> apiWeather "Consulta datos meteorológicos"
+    }
+
+    views {
+        systemContext sistema "DiagramaContexto" {
+            include *
+            autoLayout lr
+        }
+
+        styles {
+            // Estilo para el sistema principal
+            element "Software System" {
+                background #cbe5ff
+                color #003366
+                stroke #005a9c
+                shape roundedbox
+            }
+
+            // Estilo para los sistemas externos (verde como en la foto de clase)
+            element "External" {
+                background #c8e6c9
+                color #1b5e20
+                stroke #2e7d32
+            }
+
+            // Estilo para los usuarios (azul oscuro como en la foto de clase)
+            element "Person" {
+                background #0d47a1
+                color #ffffff
+                shape person
+            }
+
+            // Estilo de las relaciones (líneas punteadas)
+            relationship "Relationship" {
+                dashed true
+                color #555555
+            }
+        }
+    }
+
+    configuration {
+        scope softwaresystem
+    }
+}
